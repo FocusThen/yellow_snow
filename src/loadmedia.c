@@ -1,5 +1,4 @@
 #include "loadmedia.h"
-#include "SDL2/SDL_render.h"
 
 bool game_load_media(struct Game *g) {
   g->background_image = IMG_LoadTexture(g->renderer, "images/background.png");
