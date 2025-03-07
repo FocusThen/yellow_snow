@@ -1,6 +1,4 @@
 #include "player.h"
-#include "SDL2/SDL_render.h"
-#include "SDL2/SDL_scancode.h"
 #include "main.h"
 
 bool player_new(struct Player **player, SDL_Renderer *renderer,
