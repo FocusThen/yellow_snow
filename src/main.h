@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 
 #define SDL_FLAGS SDL_INIT_EVERYTHING

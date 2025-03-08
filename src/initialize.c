@@ -29,5 +29,7 @@ bool game_initialize(struct Game *g) {
     return true;
   }
 
+  srand((unsigned)time(NULL));
+
   return false;
 }

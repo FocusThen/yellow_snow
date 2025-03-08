@@ -2,7 +2,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "SDL2/SDL_render.h"
 #include "main.h"
 
 struct Player {

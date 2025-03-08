@@ -19,5 +19,16 @@ bool game_load_media(struct Game *g) {
     return true;
   }
 
+  g->yellow_image = IMG_LoadTexture(g->renderer, "images/yellow.png");
+  if (!g->yellow_image) {
+    fprintf(stderr, "Error Loading Yellow Flake Image: %s\n", IMG_GetError());
+    return true;
+  }
+
+  g->white_image = IMG_LoadTexture(g->renderer, "images/white.png");
+  if (!g->white_image) {
+    fprintf(stderr, "Error Loading White Flake Image: %s\n", IMG_GetError());
+    return true;
+  }
   return false;
 }

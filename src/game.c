@@ -2,7 +2,6 @@
 #include "game.h"
 #include "initialize.h"
 #include "loadmedia.h"
-#include "player.h"
 
 bool game_new(struct Game **game) {
   *game = calloc(1, sizeof(struct Game));
@@ -23,13 +22,30 @@ bool game_new(struct Game **game) {
     return true;
   }
 
+  for (int i = 0; i < 5; i++) {
+    if (flake_new(&g->flakes, g->renderer, g->yellow_image)) {
+      return true;
+    }
+  }
+  for (int i = 0; i < 5; i++) {
+    if (flake_new(&g->flakes, g->renderer, g->white_image)) {
+      return true;
+    }
+  }
+
   return false;
 }
 
 void game_free(struct Game **game) {
   struct Game *g = *game;
 
+  flake_free(&g->flakes);
   player_free(&g->player);
+
+  SDL_DestroyTexture(g->yellow_image);
+  g->yellow_image = NULL;
+  SDL_DestroyTexture(g->white_image);
+  g->white_image = NULL;
 
   SDL_DestroyTexture(g->player_image);
   g->player_image = NULL;
@@ -41,6 +57,7 @@ void game_free(struct Game **game) {
   SDL_DestroyWindow(g->window);
   g->window = NULL;
 
+  IMG_Quit();
   SDL_Quit();
 
   free(g);
@@ -69,12 +86,15 @@ bool game_run(struct Game *g) {
     }
 
     player_update(g->player);
+    flake_update(g->flakes);
 
     SDL_RenderClear(g->renderer);
 
     SDL_RenderCopy(g->renderer, g->background_image, NULL, &g->background_rect);
 
     player_draw(g->player);
+
+    flake_draw(g->flakes);
 
     SDL_RenderPresent(g->renderer);
 
