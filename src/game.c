@@ -1,5 +1,7 @@
 
 #include "game.h"
+#include "SDL2/SDL_scancode.h"
+#include "flakes.h"
 #include "initialize.h"
 #include "loadmedia.h"
 
@@ -76,6 +78,9 @@ bool game_run(struct Game *g) {
         switch (g->event.key.keysym.scancode) {
         case SDL_SCANCODE_ESCAPE:
           return false;
+          break;
+        case SDL_SCANCODE_SPACE:
+          flakes_reset(g->flakes);
           break;
         default:
           break;
