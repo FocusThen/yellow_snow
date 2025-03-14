@@ -17,6 +17,11 @@ struct Game {
   SDL_Texture *yellow_image;
   SDL_Texture *white_image;
 
+  Mix_Chunk *collect_sound;
+  Mix_Chunk *hit_sound;
+
+  bool playing;
+
   struct Flake *flakes;
   struct Player *player;
 };

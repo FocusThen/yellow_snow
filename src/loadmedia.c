@@ -1,4 +1,5 @@
 #include "loadmedia.h"
+#include "SDL2/SDL_mixer.h"
 
 bool game_load_media(struct Game *g) {
   g->background_image = IMG_LoadTexture(g->renderer, "images/background.png");
@@ -30,5 +31,18 @@ bool game_load_media(struct Game *g) {
     fprintf(stderr, "Error Loading White Flake Image: %s\n", IMG_GetError());
     return true;
   }
+
+  g->hit_sound = Mix_LoadWAV("sounds/hit.ogg");
+  if (!g->hit_sound) {
+    fprintf(stderr, "Error Loading hit sound: %s\n", Mix_GetError());
+    return true;
+  }
+
+  g->collect_sound = Mix_LoadWAV("sounds/collect.ogg");
+  if (!g->collect_sound) {
+    fprintf(stderr, "Error Loading collect sound: %s\n", Mix_GetError());
+    return true;
+  }
+
   return false;
 }

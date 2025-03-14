@@ -1,10 +1,31 @@
 #include "initialize.h"
+#include "SDL2/SDL_mixer.h"
+#include "main.h"
 
 bool game_initialize(struct Game *g) {
   if (SDL_Init(SDL_INIT_EVERYTHING)) {
     fprintf(stderr, "Error initialize SDL2: %s\n", SDL_GetError());
     return true;
   }
+
+  int img_init = IMG_Init(IMAGE_FLAGS);
+  if ((img_init & IMAGE_FLAGS) != IMAGE_FLAGS) {
+    fprintf(stderr, "Error Init Image: %s\n", IMG_GetError());
+    return true;
+  }
+
+  int mix_init = Mix_Init(MIXER_FLAGS);
+  if ((mix_init & MIXER_FLAGS) != MIXER_FLAGS) {
+    fprintf(stderr, "Error Init Mixer: %s\n", Mix_GetError());
+    return true;
+  }
+
+  if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT,
+                    MIX_DEFAULT_CHANNELS, 1025)) {
+    fprintf(stderr, "Error opening Audio: %s\n", Mix_GetError());
+    return true;
+  }
+
   g->window =
       SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_CENTERED,
                        SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);

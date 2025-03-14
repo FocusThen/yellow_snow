@@ -25,9 +25,7 @@ bool player_new(struct Player **player, SDL_Renderer *renderer,
     return true;
   }
 
-  p->flip = SDL_FLIP_NONE;
-  p->rect.x = (WINDOW_WIDTH - p->rect.w) / 2;
-  p->rect.y = 377;
+  player_reset(p);
 
   return false;
 }
@@ -46,6 +44,12 @@ int player_right(struct Player *p) {
   return p->rect.x + p->rect.w - p->right_offset;
 }
 int player_top(struct Player *p) { return p->rect.y + p->top_offset; }
+
+void player_reset(struct Player *p){
+  p->flip = SDL_FLIP_NONE;
+  p->rect.x = (WINDOW_WIDTH - p->rect.w) / 2;
+  p->rect.y = 377;
+}
 
 void player_update(struct Player *p) {
   if (p->keystate[SDL_SCANCODE_LEFT] || p->keystate[SDL_SCANCODE_A]) {

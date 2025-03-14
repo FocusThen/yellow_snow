@@ -25,4 +25,6 @@ int player_left(struct Player *p);
 int player_right(struct Player *p);
 int player_top(struct Player *p);
 
+void player_reset(struct Player *p);
+
 #endif

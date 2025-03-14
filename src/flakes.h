@@ -14,13 +14,13 @@ struct Flake {
   int ground;
 };
 
-bool flake_new(struct Flake **f, SDL_Renderer *renderer, SDL_Texture *image);
+bool flake_new(struct Flake **f, SDL_Renderer *renderer, SDL_Texture *image, bool is_white);
 void flake_free(struct Flake **f);
 void flake_update(struct Flake *f);
 void flake_draw(struct Flake *f);
 int flake_left(struct Flake *f);
-int flakes_right(struct Flake *f);
-int flakes_bottom(struct Flake *f);
+int flake_right(struct Flake *f);
+int flake_bottom(struct Flake *f);
 
 
 void flake_reset(struct Flake *f, bool full);
