@@ -4,6 +4,7 @@
 #include "flakes.h"
 #include "main.h"
 #include "player.h"
+#include "score.h"
 
 struct Game {
   SDL_Event event;
@@ -24,6 +25,7 @@ struct Game {
 
   struct Flake *flakes;
   struct Player *player;
+  struct Score *score;
 };
 
 bool game_new(struct Game **game);

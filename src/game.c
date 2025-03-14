@@ -1,11 +1,12 @@
 
 #include "game.h"
-#include "SDL2/SDL_mixer.h"
 #include "SDL2/SDL_scancode.h"
+#include "SDL2/SDL_ttf.h"
 #include "flakes.h"
 #include "initialize.h"
 #include "loadmedia.h"
 #include "player.h"
+#include "score.h"
 
 bool check_collision(struct Game *g);
 bool handle_collision(struct Game *g, struct Flake *f);
@@ -41,6 +42,10 @@ bool game_new(struct Game **game) {
     }
   }
 
+  if (score_new(&g->score, g->renderer)) {
+    return true;
+  }
+
   g->playing = true;
 
   return false;
@@ -51,6 +56,7 @@ void game_free(struct Game **game) {
 
   flake_free(&g->flakes);
   player_free(&g->player);
+  score_free(&g->score);
 
   Mix_FreeChunk(g->collect_sound);
   g->collect_sound = NULL;
@@ -74,6 +80,7 @@ void game_free(struct Game **game) {
 
   Mix_CloseAudio();
 
+  TTF_Quit();
   Mix_Quit();
   IMG_Quit();
   SDL_Quit();
@@ -88,6 +95,9 @@ bool handle_collision(struct Game *g, struct Flake *f) {
   if (f->is_white) {
     Mix_PlayChannel(-1, g->collect_sound, 0);
     flake_reset(f, false);
+    if (score_increment(g->score)) {
+      return true;
+    }
   } else {
     Mix_PlayChannel(-1, g->hit_sound, 0);
     g->playing = false;
@@ -169,6 +179,8 @@ bool game_run(struct Game *g) {
     player_draw(g->player);
 
     flake_draw(g->flakes);
+
+    score_draw(g->score);
 
     SDL_RenderPresent(g->renderer);
 

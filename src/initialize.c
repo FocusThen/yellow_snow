@@ -1,5 +1,6 @@
 #include "initialize.h"
 #include "SDL2/SDL_mixer.h"
+#include "SDL2/SDL_ttf.h"
 #include "main.h"
 
 bool game_initialize(struct Game *g) {
@@ -23,6 +24,11 @@ bool game_initialize(struct Game *g) {
   if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT,
                     MIX_DEFAULT_CHANNELS, 1025)) {
     fprintf(stderr, "Error opening Audio: %s\n", Mix_GetError());
+    return true;
+  }
+
+  if (TTF_Init()) {
+    fprintf(stderr, "Error Init TTF: %s\n", TTF_GetError());
     return true;
   }
 
